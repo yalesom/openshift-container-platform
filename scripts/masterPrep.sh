@@ -7,16 +7,28 @@ POOL_ID=$3
 SUDOUSER=$4
 LOCATION=$5
 STORAGEACCOUNT=$6
+KATELLO_CA=$7
 
 # Remove RHUI
 
 rm -f /etc/yum.repos.d/rh-cloud.repo
 sleep 10
 
-# Register Host with Cloud Access Subscription
-echo $(date) " - Register host with Cloud Access Subscription"
+if [ $# -eq 7 ]
+  then
+    # Install Katello CA for Private Satellite
+    echo $(date) " - Install Katello CA rpm"
+    yum -y --nogpgcheck install "$KATELLO_CA"
+    
+    # Register with Satellite Server
+    echo $(date) " - Register host with Satellite Server"
+    subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
+else
+    # Register Host with Cloud Access Subscription
+    echo $(date) " - Register host with Cloud Access Subscription"
 
-subscription-manager register --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" || subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
+    subscription-manager register --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" || subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
+fi
 
 if [ $? -eq 0 ]
 then

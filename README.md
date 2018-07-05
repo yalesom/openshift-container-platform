@@ -1,5 +1,9 @@
 # OpenShift Container Platform Deployment Template
 
+# Yale SOM Changes
+Added functionality for private Satellite server in registration process.
+
+
 ## NOTE: Structural change to Repo
 
 The master branch will now contain the most current release of OpenShift Container Platform with experimental items.  This may cause instability but will include new things or try new things.

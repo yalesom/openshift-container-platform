@@ -8,7 +8,7 @@
 				"description": "Base URL for Template Files",
 				"artifactsBaseUrl": ""
 			},
-			"defaultValue": "https://raw.githubusercontent.com/Microsoft/openshift-container-platform/master"
+			"defaultValue": "https://raw.githubusercontent.com/yalesom/openshift-container-platform/master"
 		},
 		"masterVmSize": {
 			"type": "string",
@@ -199,6 +199,13 @@
 			"minLength": 1,
 			"metadata": {
 				"description": "Red Hat Subscription Manager Password or Activation Key. To find or create your Activation Key, go to: https://access.redhat.com/management/activation_keys"
+			}
+		},
+		"katelloRPMCAUrl": {
+			"type": "securestring",
+			"minLength": 1,
+			"metadata": {
+				"description": "URL for Red Hat Satellite Katello CA RPM."
 			}
 		},
 		"rhsmPoolId": {
@@ -1984,7 +1991,7 @@
 					]
 				},
 				"protectedSettings": {
-					"commandToExecute": "[concat('bash ', variables('nodePrepScriptFileName'), ' ', parameters('rhsmUsernameOrOrgId'), ' ', variables('singlequote'), parameters('rhsmPasswordOrActivationKey'), variables('singlequote'), ' ', parameters('rhsmPoolId'))]"
+					"commandToExecute": "[concat('bash ', variables('nodePrepScriptFileName'), ' ', parameters('rhsmUsernameOrOrgId'), ' ', variables('singlequote'), parameters('rhsmPasswordOrActivationKey'), variables('singlequote'), ' ', parameters('rhsmPoolId'), ' ', parameters('katelloRPMCAUrl'))]"
 				}
 			}
 		}, {
@@ -2018,7 +2025,7 @@
 					]
 				},
 				"protectedSettings": {
-					"commandToExecute": "[concat('bash ', variables('nodePrepScriptFileName'), ' ', parameters('rhsmUsernameOrOrgId'), ' ', variables('singlequote'), parameters('rhsmPasswordOrActivationKey'), variables('singlequote'), ' ', parameters('rhsmPoolId'))]"
+					"commandToExecute": "[concat('bash ', variables('nodePrepScriptFileName'), ' ', parameters('rhsmUsernameOrOrgId'), ' ', variables('singlequote'), parameters('rhsmPasswordOrActivationKey'), variables('singlequote'), ' ', parameters('rhsmPoolId'), ' ', parameters('katelloRPMCAUrl'))]"
 				}
 			}
 		}, {
@@ -2051,7 +2058,7 @@
 					]
 				},
 				"protectedSettings": {
-					"commandToExecute": "[concat('bash ', variables('nodePrepScriptFileName'), ' ', parameters('rhsmUsernameOrOrgId'), ' ', variables('singlequote'), parameters('rhsmPasswordOrActivationKey'), variables('singlequote'), ' ', parameters('rhsmPoolId'))]"
+					"commandToExecute": "[concat('bash ', variables('nodePrepScriptFileName'), ' ', parameters('rhsmUsernameOrOrgId'), ' ', variables('singlequote'), parameters('rhsmPasswordOrActivationKey'), variables('singlequote'), ' ', parameters('rhsmPoolId'), ' ', parameters('katelloRPMCAUrl'))]"
 				}
 			}
 		}, {
