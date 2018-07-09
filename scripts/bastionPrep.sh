@@ -20,21 +20,14 @@ runuser -l $SUDOUSER -c "chmod 600 ~/.ssh/id_rsa*"
 rm -f /etc/yum.repos.d/rh-cloud.repo
 sleep 10
 
-if [ $# -eq 6 ]
-  then
-    # Install Katello CA for Private Satellite
-    echo $(date) " - Install Katello CA rpm"
-    yum -y --nogpgcheck install "$KATELLO_CA"
+# Install Katello CA for Private Satellite
+echo $(date) " - Install Katello CA rpm"
+yum -y --nogpgcheck install "$KATELLO_CA"
     
-    # Register with Satellite Server
-    echo $(date) " - Register host with Satellite Server"
-    subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
-else
-    # Register Host with Cloud Access Subscription
-    echo $(date) " - Register host with Cloud Access Subscription"
+# Register with Satellite Server
+echo $(date) " - Register host with Satellite Server"
+subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
 
-    subscription-manager register --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" || subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
-fi
 if [ $? -eq 0 ]
 then
     echo "Subscribed successfully"
@@ -46,13 +39,8 @@ else
     exit 3
 fi
 
-if [ $# -eq 4 ]
-  then
-    subscription-manager register  > attach.log
-else
-    subscription-manager attach --pool=$POOL_ID > attach.log
-fi
-
+#    subscription-manager attach --pool=$POOL_ID > attach.log
+subscription-manager register  > attach.log
 if [ $? -eq 0 ]
 then
     echo "Pool attached successfully"
