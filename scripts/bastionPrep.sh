@@ -46,7 +46,13 @@ else
     exit 3
 fi
 
-subscription-manager attach --pool=$POOL_ID > attach.log
+if [ $# -eq 4 ]
+  then
+    subscription-manager register  > attach.log
+else
+    subscription-manager attach --pool=$POOL_ID > attach.log
+fi
+
 if [ $? -eq 0 ]
 then
     echo "Pool attached successfully"
