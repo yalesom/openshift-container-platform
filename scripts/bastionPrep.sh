@@ -6,7 +6,6 @@ PASSWORD_ACT_KEY="$2"
 POOL_ID=$3
 PRIVATEKEY=$4
 SUDOUSER=$5
-KATELLO_CA="$6"
 
 
 # Generate private keys for use by Ansible
@@ -22,11 +21,12 @@ sleep 10
 
 # Install Katello CA for Private Satellite
 echo $(date) " - Install Katello CA rpm"
-yum -y --nogpgcheck install "$KATELLO_CA"
-    
+yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
+yum update
+
 # Register with Satellite Server
 echo $(date) " - Register host with Satellite Server"
-subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
+subscription-manager register --activationkey="latest-openshift" --org="Yale-SOM"
 
 if [ $? -eq 0 ]
 then

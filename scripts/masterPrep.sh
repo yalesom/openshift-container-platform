@@ -7,29 +7,20 @@ POOL_ID=$3
 SUDOUSER=$4
 LOCATION=$5
 STORAGEACCOUNT=$6
-KATELLO_CA=$7
 
 # Remove RHUI
 
 rm -f /etc/yum.repos.d/rh-cloud.repo
 sleep 10
 
-if [ $# -eq 7 ]
-  then
-    # Install Katello CA for Private Satellite
-    echo $(date) " - Install Katello CA rpm"
-    yum -y --nogpgcheck install "$KATELLO_CA"
-    
-    # Register with Satellite Server
-    echo $(date) " - Register host with Satellite Server"
-    subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
-else
-    # Register Host with Cloud Access Subscription
-    echo $(date) " - Register host with Cloud Access Subscription"
+# Install Katello CA for Private Satellite
+echo $(date) " - Install Katello CA rpm"
+yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
+yum update
 
-    subscription-manager register --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" || subscription-manager register --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
-fi
-
+# Register with Satellite Server
+echo $(date) " - Register host with Satellite Server"
+subscription-manager register --activationkey="latest-openshift" --org="Yale-SOM"
 if [ $? -eq 0 ]
 then
     echo "Subscribed successfully"
@@ -41,12 +32,7 @@ else
     exit 3
 fi
 
-if [ $# -eq 7 ]
-  then
-    subscription-manager register  > attach.log
-else
-    subscription-manager attach --pool=$POOL_ID > attach.log
-fi
+subscription-manager register  > attach.log
 
 if [ $? -eq 0 ]
 then
