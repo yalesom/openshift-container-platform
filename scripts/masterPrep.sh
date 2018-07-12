@@ -16,7 +16,6 @@ sleep 10
 # Install Katello CA for Private Satellite
 echo $(date) " - Install Katello CA rpm"
 yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
-yum update
 
 # Register with Satellite Server
 echo $(date) " - Register host with Satellite Server"
