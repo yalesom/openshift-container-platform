@@ -34,7 +34,7 @@ systemctl start goferd
 
 # Register with Satellite Server
 echo $(date) " - Register host with Satellite Server"
-subscription-manager register --activationkey=latest-openshift --org=Yale-SOM
+subscription-manager register --activationkey latest-openshift --org Yale-SOM
 
 if [ $? -eq 0 ]
 then
