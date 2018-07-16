@@ -25,7 +25,7 @@ yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consume
 
 # Register with Satellite Server
 echo $(date) " - Register host with Satellite Server"
-subscription-manager register --activationkey="latest-openshift" --org="Yale-SOM"
+subscription-manager register --activationkey=latest-openshift --org=Yale-SOM
 
 if [ $? -eq 0 ]
 then
