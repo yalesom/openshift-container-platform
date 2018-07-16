@@ -15,6 +15,7 @@ echo $(date) " - Install Katello CA rpm"
 yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
 subscription-manager repos --enable=rhel-version-server-satellite-tools-6-rpms
 yum install katello-agent
+systemctl enable goferd.service
 systemctl start goferd
 
 # Register with Satellite Server
