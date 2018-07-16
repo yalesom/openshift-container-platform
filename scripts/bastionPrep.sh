@@ -26,6 +26,17 @@ subscription-manager clean
 
 subscription-manager repos --list-enabled
 
+subscription-manager identity
+
+cat /etc/rhsm/rhsm.conf | grep host
+
+subscription-manager list --consumed
+
+subscription-manager list --available
+
+subscription-manager attach --pool=$POOL_ID
+
+
 subscription-manager repos --enable=rhel-\*-satellite-tools-\*-rpms
 
 yum install katello-agent
