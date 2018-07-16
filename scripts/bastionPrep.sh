@@ -21,8 +21,12 @@ sleep 10
 
 # Install Katello CA for Private Satellite
 echo $(date) " - Install Katello CA rpm"
-yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
-subscription-manager clean
+rpm -Uvh http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
+echo 'Library' | sudo tee /etc/yum/env
+# Register with Satellite Server
+echo $(date) " - Register host with Satellite Server"
+subscription-manager register --activationkey latest-openshift --org Yale-SOM
+
 
 subscription-manager repos --list-enabled
 
@@ -36,16 +40,13 @@ subscription-manager list --available
 
 subscription-manager attach --pool=$POOL_ID
 
-
 subscription-manager repos --enable=rhel-\*-satellite-tools-\*-rpms
 
 yum install katello-agent
 systemctl enable goferd.service
 systemctl start goferd
 
-# Register with Satellite Server
-echo $(date) " - Register host with Satellite Server"
-subscription-manager register --activationkey latest-openshift --org Yale-SOM
+
 
 if [ $? -eq 0 ]
 then
