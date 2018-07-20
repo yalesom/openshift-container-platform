@@ -24,22 +24,32 @@ echo $(date) " - Install Katello CA rpm"
 yum -y --nogpgcheck install http://satellite.som.yale.edu/pub/katello-ca-consumer-latest.noarch.rpm
 subscription-manager clean
 
+echo $(date) " repos list enabled"
 subscription-manager repos --list-enabled
 
+echo $(date) "identity"
 subscription-manager identity
 
+echo $(date) "cat"
 cat /etc/rhsm/rhsm.conf | grep host
 
+echo $(date) "consumed"
 subscription-manager list --consumed
 
+echo $(date) "list available"
 subscription-manager list --available
 
+
+echo $(date) "attach to pool"
 subscription-manager attach --pool=$POOL_ID
 
-
+echo $(date) "enable satellite rpms"
 subscription-manager repos --enable=rhel-\*-satellite-tools-\*-rpms
 
+echo $(date) "katello"
 yum install katello-agent
+
+echo $(date) "goferd"
 systemctl enable goferd.service
 systemctl start goferd
 
