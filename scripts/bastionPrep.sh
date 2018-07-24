@@ -28,7 +28,7 @@ echo $(date) " - Register host with Satellite Server"
 subscription-manager register --activationkey latest-openshift --org Yale-SOM
 
 
-echo $(date) " repos list enabled"
+echo $(date) "repos list enabled"
 subscription-manager repos --list-enabled
 
 echo $(date) "identity"
@@ -53,9 +53,9 @@ subscription-manager repos --enable=rhel-\*-satellite-tools-\*-rpms
 echo $(date) "katello"
 yum install katello-agent
 
-echo $(date) "goferd"
-systemctl enable goferd.service
-systemctl start goferd
+#echo $(date) "goferd"
+#systemctl enable goferd.service
+#systemctl start goferd
 
 
 
